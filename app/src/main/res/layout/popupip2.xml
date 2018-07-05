@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popupIP2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    android:padding="10px">
+
+
+    <TextView
+        android:id="@+id/textViewIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keet Seel Area Map" />
+
+    <ImageView
+        android:id="@+id/imageGPS"
+        android:layout_width="384dp"
+        android:layout_height="260dp"
+        app:srcCompat="@drawable/map1"
+        tools:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewGPS"
+        android:layout_width="412dp"
+        android:layout_height="74dp"
+        android:text="Sampe Text for now" />
+
+    <Button
+        android:id="@+id/okIPGPS"
+        android:layout_width="47dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:drawablePadding="3sp"
+        android:text="OK" />
+
+
+</LinearLayout>

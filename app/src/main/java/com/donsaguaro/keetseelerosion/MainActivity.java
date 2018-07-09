@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private final int myLocUpload = 0;
     public static final String EXTRA_MESSAGE = "com.donsaguaro.keetseelerosion.MainActivity.MESSAGE";
 
+
 //    private ImageView imageView;
 //    private int imageLength;
     private String dateStringFinal;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private Button showMap;
     private Button showGPS;
     private boolean setDateBool = false;
-    
+
     private Button selectImageButton1;
     private Button selectImageButton2;
     private Button selectImageButton3;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private Button uploadImageButton4;
     private Button uploadImageButton5;
     private Button uploadImageButton6;
-    
+
     private Button setDateButton;
     //private String dateStringFinal;
     private PopupWindow pw;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         this.dateError = (TextView) findViewById(R.id.dateError);
         dateError.setVisibility(View.INVISIBLE);
         String instructionsText = getString(R.string.instructionsText);
+        final String storageSig = getString(R.string.storageSignature);
         String privacyText = getString(R.string.privacyText);
         String mapText = "MAP";
 
@@ -212,30 +214,41 @@ public class MainActivity extends AppCompatActivity {
 
         this.uploadImageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {UploadImage(1); }
+            public void onClick(View v) {
+                uploadImageButton1.setEnabled(false);
+                UploadImage(1,storageSig); }
         });
         this.uploadImageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {UploadImage(2); }
+            public void onClick(View v) {
+                uploadImageButton2.setEnabled(false);
+                UploadImage(2,storageSig); }
         });
         this.uploadImageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {UploadImage(3); }
+            public void onClick(View v) {
+                uploadImageButton3.setEnabled(false);
+                UploadImage(3,storageSig); }
         });
         this.uploadImageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {UploadImage(4); }
+            public void onClick(View v) {
+                uploadImageButton4.setEnabled(false);
+                UploadImage(4,storageSig); }
         });
         this.uploadImageButton5.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {UploadImage(5); }
+            public void onClick(View v) {
+                uploadImageButton5.setEnabled(false);
+                UploadImage(5,storageSig); }
         });
         this.uploadImageButton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadImage(6); }
+                uploadImageButton6.setEnabled(false);
+                UploadImage(6, storageSig); }
         });
-        
+
 
 
         this.setDateButton = (Button) findViewById(R.id.setDateButton);
@@ -430,8 +443,10 @@ public class MainActivity extends AppCompatActivity {
 
     private class myRunnable implements Runnable{
         public Integer myLoc;
-        public myRunnable(Integer myLoc){
+        public String storageSig;
+        public myRunnable(Integer myLoc, String storageSig){
             this.myLoc=myLoc;
+            this.storageSig= storageSig;
         }
         public void run(){
 
@@ -439,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void UploadImage(final Integer myLoc)
+    private void UploadImage(final Integer myLoc, final String storageSig)
     {
         try {
             System.out.println("Upload thinks uri is "+locDictionary.get(myLoc).toString());
@@ -448,20 +463,84 @@ public class MainActivity extends AppCompatActivity {
             final int imageLength = imageStream.available();
             final Handler handler = new Handler();
 
-            Thread th = new Thread(new myRunnable(myLoc) {
+            Thread th = new Thread(new myRunnable(myLoc, storageSig) {
                 public void run() {
                     try {
+                        System.out.println("About to upload"+myLoc);
 
-                        final String imageName = ImageManager.UploadImage(imageStream, imageLength, dateStringFinal, myLoc);
+                        final String imageName = ImageManager.UploadImage(imageStream, imageLength, dateStringFinal, myLoc,storageSig);
+                        System.out.println("About to uploaded!!!"+myLoc);
+
+
+                        switch (myLoc) {
+                            case 1:
+                                Button currentButton1 = (Button) findViewById(R.id.upload1);
+                                currentButton1.setBackgroundColor(Color.GREEN);
+                                break;
+                            case 2:
+                                Button currentButton2 = (Button) findViewById(R.id.upload2);
+                                currentButton2.setBackgroundColor(Color.GREEN);
+                                break;
+                            case 3:
+                                Button currentButton3 = (Button) findViewById(R.id.upload3);
+                                currentButton3.setBackgroundColor(Color.GREEN);
+                                break;
+                            case 4:
+                                Button currentButton4 = (Button) findViewById(R.id.upload4);
+                                currentButton4.setBackgroundColor(Color.GREEN);
+                                break;
+                            case 5:
+                                Button currentButton5 = (Button) findViewById(R.id.upload5);
+                                currentButton5.setBackgroundColor(Color.GREEN);
+                                break;
+                            case 6:
+                                Button currentButton6 = (Button) findViewById(R.id.upload6);
+                                currentButton6.setBackgroundColor(Color.GREEN);
+                                break;
+                        }
+                        System.out.println("Done with switch");
+
+
+
+
                         handler.post(new Runnable() {
 
                             public void run() {
                                 Toast.makeText(MainActivity.this, "Image Uploaded Successfully. Name = " + imageName, Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
                     catch(Exception ex) {
                         final String exceptionMessage = ex.getMessage();
+                        uploadImageButton1.setEnabled(false);
+                        System.out.println("Catch statement triggered!!");
+                        switch (myLoc) {
+                            case 1:
+                                Button currentButton1 = (Button) findViewById(R.id.upload1);
+                                currentButton1.setEnabled(true);
+                                break;
+                            case 2:
+                                Button currentButton2 = (Button) findViewById(R.id.upload2);
+                                currentButton2.setEnabled(true);
+                                break;
+                            case 3:
+                                Button currentButton3 = (Button) findViewById(R.id.upload3);
+                                currentButton3.setEnabled(true);
+                                break;
+                            case 4:
+                                Button currentButton4 = (Button) findViewById(R.id.upload4);
+                                currentButton4.setEnabled(true);
+                                break;
+                            case 5:
+                                Button currentButton5 = (Button) findViewById(R.id.upload5);
+                                currentButton5.setEnabled(true);
+                                break;
+                            case 6:
+                                Button currentButton6 = (Button) findViewById(R.id.upload6);
+                                currentButton6.setEnabled(true);
+                                break;
+                        }
                         handler.post(new Runnable() {
                             public void run() {
                                 Toast.makeText(MainActivity.this, exceptionMessage, Toast.LENGTH_SHORT).show();

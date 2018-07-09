@@ -17,6 +17,9 @@
 
 package com.donsaguaro.keetseelerosion;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
@@ -40,16 +43,23 @@ public class ImageManager {
     */
 
 
-
     public static final String storageConnectionString = "BlobEndpoint=https://keetseelerosion.blob.core.windows.net/;" +
             "TableEndpoint=https://keetseelerosion.table.core.windows.net/;" +
-            "SharedAccessSignature=sv=2017-11-09&ss=b&srt=sco&sp=rwlac&se=2028-06-21T04:15:26Z&st=2018-06-20T20:15:26Z&spr=https,http&sig=YvS15O5T%2BiS6dOFnt7b10GvOAtKLaTsNSV0WzMcD6YA%3D";
+            "SharedAccessSignature=sv=2017-11-09&ss=b&srt=sco&sp=rwlac&se=2028-06-21T04:15:26Z&st=2018-06-20T20:15:26Z&spr=https,http&sig=";
 
-    private static CloudBlobContainer getContainer() throws Exception {
+
+//    public static final String storageConnectionString = "BlobEndpoint=https://keetseelerosion.blob.core.windows.net/;" +
+//            "TableEndpoint=https://keetseelerosion.table.core.windows.net/;" +
+//            "SharedAccessSignature=sv=2017-11-09&ss=b&srt=sco&sp=rwlac&se=2028-06-21T04:15:26Z&st=2018-06-20T20:15:26Z&spr=https,http&sig=YvS15O5T%2BiS6dOFnt7b10GvOAtKLaTsNSV0WzMcD6YA%3D";
+
+    private static CloudBlobContainer getContainer(String storageSig) throws Exception {
         // Retrieve storage account from connection-string.
+        //String privacyText = getString(R.string.privacyText);
+        String finalString = storageConnectionString + storageSig;
+        System.out.println("Final String is " +finalString);
 
         CloudStorageAccount storageAccount = CloudStorageAccount
-                .parse(storageConnectionString);
+                .parse(finalString);
 
         // Create the blob client.
         CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
@@ -61,18 +71,16 @@ public class ImageManager {
         return container;
     }
 
-    public static String UploadImage(InputStream image, int imageLength, String dateStringFinal, int myLoc) throws Exception {
+    public static String UploadImage(InputStream image, int imageLength, String dateStringFinal, int myLoc, String storageSig) throws Exception {
         String imageName = myLoc + dateStringFinal;
         System.out.println("image name " + imageName);
 
 
-        CloudBlobContainer container = getContainer();
+        CloudBlobContainer container = getContainer(storageSig);
 
         container.createIfNotExists();
         //String imageName = locationNum.toSring()+year+month+day;
         //String imageName = randomString(10);
-
-
 
 
         CloudBlockBlob imageBlob = container.getBlockBlobReference(imageName);
@@ -81,42 +89,42 @@ public class ImageManager {
         return imageName;
 
     }
-
-    public static String[] ListImages() throws Exception{
-        CloudBlobContainer container = getContainer();
-
-        Iterable<ListBlobItem> blobs = container.listBlobs();
-
-        LinkedList<String> blobNames = new LinkedList<>();
-        for(ListBlobItem blob: blobs) {
-            blobNames.add(((CloudBlockBlob) blob).getName());
-        }
-
-        return blobNames.toArray(new String[blobNames.size()]);
-    }
-
-    public static void GetImage(String name, OutputStream imageStream, long imageLength) throws Exception {
-        CloudBlobContainer container = getContainer();
-
-        CloudBlockBlob blob = container.getBlockBlobReference(name);
-
-        if(blob.exists()){
-            blob.downloadAttributes();
-
-            imageLength = blob.getProperties().getLength();
-
-            blob.download(imageStream);
-        }
-    }
-
-    static final String validChars = "abcdefghijklmnopqrstuvwxyz";
-    static SecureRandom rnd = new SecureRandom();
-
-    static String randomString( int len ){
-        StringBuilder sb = new StringBuilder( len );
-        for( int i = 0; i < len; i++ )
-            sb.append( validChars.charAt( rnd.nextInt(validChars.length()) ) );
-        return sb.toString();
-    }
-
 }
+//    public static String[] ListImages() throws Exception{
+//        CloudBlobContainer container = getContainer();
+//
+//        Iterable<ListBlobItem> blobs = container.listBlobs();
+//
+//        LinkedList<String> blobNames = new LinkedList<>();
+//        for(ListBlobItem blob: blobs) {
+//            blobNames.add(((CloudBlockBlob) blob).getName());
+//        }
+//
+//        return blobNames.toArray(new String[blobNames.size()]);
+//    }
+
+//
+//public static void GetImage(String name, OutputStream imageStream, long imageLength) throws Exception {
+//        CloudBlobContainer container = getContainer();
+//
+//        CloudBlockBlob blob = container.getBlockBlobReference(name);
+//
+//        if(blob.exists()){
+//            blob.downloadAttributes();
+//
+//            imageLength = blob.getProperties().getLength();
+//
+//            blob.download(imageStream);
+//        }
+//    }
+//    static final String validChars = "abcdefghijklmnopqrstuvwxyz";
+//    static SecureRandom rnd = new SecureRandom();
+//
+//    static String randomString( int len ){
+//        StringBuilder sb = new StringBuilder( len );
+//        for( int i = 0; i < len; i++ )
+//            sb.append( validChars.charAt( rnd.nextInt(validChars.length()) ) );
+//        return sb.toString();
+//    }
+//
+//}

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Keet Seel Erosion</string>
+    <string name="privacyText">This is privacy info</string>
+    <string name="instructionsText">This are the instructions </string>
+    <string name="loc1Desc">Here is description 1 </string>
+    <string name="loc2Desc">Here is description 2 </string>
+    <string name="loc3Desc">Here is description 3 </string>
+    <string name="loc4Desc">Here is description 4 </string>
+    <string name="loc5Desc">Here is description 5 </string>
+    <string name="loc6Desc">Here is description 6 </string>
+    <string name="locksDesc">Here is description ks </string>
+    <string name="storageSignature">YvS15O5T%2BiS6dOFnt7b10GvOAtKLaTsNSV0WzMcD6YA%3D</string>
+</resources>

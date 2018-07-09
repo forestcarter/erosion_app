@@ -4,16 +4,12 @@ package com.donsaguaro.keetseelerosion;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +25,7 @@ import android.content.Context;
 
 //import com.donsaguaro.keetseelerosion.R;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.HashMap;
 
 
@@ -47,14 +36,19 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.donsaguaro.keetseelerosion.MainActivity.MESSAGE";
 
 
-//    private ImageView imageView;
+    private ImageView check1;
+    private ImageView check2;
+    private ImageView check3;
+    private ImageView check4;
+    private ImageView check5;
+    private ImageView check6;
 //    private int imageLength;
     private String dateStringFinal;
     private EditText dateInput;
     private TextView dateError;
+    private TextView uploading;
     private Button instructions;
     private Button privacyButton;
-    private Button showMap;
     private Button showGPS;
     private boolean setDateBool = false;
 
@@ -64,12 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Button selectImageButton4;
     private Button selectImageButton5;
     private Button selectImageButton6;
-    private Button previewImageButton1;
-    private Button previewImageButton2;
-    private Button previewImageButton3;
-    private Button previewImageButton4;
-    private Button previewImageButton5;
-    private Button previewImageButton6;
+
     private Button uploadImageButton1;
     private Button uploadImageButton2;
     private Button uploadImageButton3;
@@ -85,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
 
 
@@ -112,19 +101,26 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        this.check1= (ImageView) findViewById(R.id.check1);
+        this.check2= (ImageView) findViewById(R.id.check2);
+        this.check3= (ImageView) findViewById(R.id.check3);
+        this.check4= (ImageView) findViewById(R.id.check4);
+        this.check5= (ImageView) findViewById(R.id.check5);
+        this.check6= (ImageView) findViewById(R.id.check6);
         //copyAssets();
         this.dateInput= (EditText) findViewById(R.id.dateInput);
         this.instructions = (Button) findViewById(R.id.instructions);
         this.privacyButton = (Button) findViewById(R.id.privacyButton);
-        this.showMap = (Button) findViewById(R.id.showMap);
         this.showGPS = (Button) findViewById(R.id.gps);
         this.dateError = (TextView) findViewById(R.id.dateError);
-        dateError.setVisibility(View.INVISIBLE);
+        this.uploading = (TextView) findViewById(R.id.uploading);
+
+//        dateError.setVisibility(View.INVISIBLE);
+//        uploading.setVisibility(View.INVISIBLE);
         String instructionsText = getString(R.string.instructionsText);
         final String storageSig = getString(R.string.storageSignature);
         String privacyText = getString(R.string.privacyText);
-        String mapText = "MAP";
+        //String mapText = "MAP";
 
 
         this.selectImageButton1 = (Button) findViewById(R.id.select1);
@@ -141,12 +137,6 @@ public class MainActivity extends AppCompatActivity {
         this.uploadImageButton5 = (Button) findViewById(R.id.upload5);
         this.uploadImageButton6 = (Button) findViewById(R.id.upload6);
 
-        this.previewImageButton1 = (Button) findViewById(R.id.preview1);
-        this.previewImageButton2 = (Button) findViewById(R.id.preview2);
-        this.previewImageButton3 = (Button) findViewById(R.id.preview3);
-        this.previewImageButton4 = (Button) findViewById(R.id.preview4);
-        this.previewImageButton5 = (Button) findViewById(R.id.preview5);
-        this.previewImageButton6 = (Button) findViewById(R.id.preview6);
 
         uploadImageButton1.setEnabled(false);
         uploadImageButton2.setEnabled(false);
@@ -186,47 +176,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {SelectImageFromGallery(6); }
         });
 
-        this.previewImageButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {ListImages(1); }
-        });
-        this.previewImageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {ListImages(2); }
-        });
-        this.previewImageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {ListImages(3); }
-        });
-        this.previewImageButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {ListImages(4); }
-        });
-        this.previewImageButton5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {ListImages(5); }
-        });
-        this.previewImageButton6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListImages(6); }
-        });
-
         this.uploadImageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploading.setVisibility(View.VISIBLE);
                 uploadImageButton1.setEnabled(false);
                 UploadImage(1,storageSig); }
         });
         this.uploadImageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploading.setVisibility(View.VISIBLE);
                 uploadImageButton2.setEnabled(false);
                 UploadImage(2,storageSig); }
         });
         this.uploadImageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploading.setVisibility(View.VISIBLE);
+                uploading.setVisibility(View.VISIBLE);
                 uploadImageButton3.setEnabled(false);
                 UploadImage(3,storageSig); }
         });
@@ -239,12 +207,14 @@ public class MainActivity extends AppCompatActivity {
         this.uploadImageButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploading.setVisibility(View.VISIBLE);
                 uploadImageButton5.setEnabled(false);
                 UploadImage(5,storageSig); }
         });
         this.uploadImageButton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploading.setVisibility(View.VISIBLE);
                 uploadImageButton6.setEnabled(false);
                 UploadImage(6, storageSig); }
         });
@@ -280,17 +250,16 @@ public class MainActivity extends AppCompatActivity {
                         selectImageButton6.setEnabled(true);
                     }else{
                         dateError.setVisibility(View.VISIBLE);
-                        dateError.setBackgroundColor(Color.RED);
+                        //dateError.setBackgroundColor(Color.RED);
                     }
                 } else {
                     dateError.setVisibility(View.VISIBLE);
-                    dateError.setBackgroundColor(Color.RED);
+                    //dateError.setBackgroundColor(Color.RED);
                 }
             }
         });
 
 
-        setOnClick(showMap,mapText);
         setOnClick(instructions,instructionsText);
         setOnClick(privacyButton,privacyText);
         setOnClickGPS(showGPS);
@@ -367,21 +336,21 @@ public class MainActivity extends AppCompatActivity {
             pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
             // display the popup in the center
             pw.showAtLocation(v, Gravity.CENTER, 0, 0);
-            ImageView imageViewMap = (ImageView) layout.findViewById(R.id.imageViewMap);
-            if (writeText=="MAP"){
-                imageViewMap.setVisibility(View.VISIBLE);
+            //ImageView imageViewMap = (ImageView) layout.findViewById(R.id.imageViewMap);
+//            if (writeText=="MAP"){
+//                imageViewMap.setVisibility(View.VISIBLE);
+//
+//            }else {
+//                ViewGroup.LayoutParams paramss=imageViewMap.getLayoutParams();
+//                paramss.height=1;
+//                paramss.width=1;
+//
+//                imageViewMap.setLayoutParams(paramss);
+//                imageViewMap.setVisibility(View.INVISIBLE);
 
-            }else {
-                ViewGroup.LayoutParams paramss=imageViewMap.getLayoutParams();
-                paramss.height=1;
-                paramss.width=1;
-
-                imageViewMap.setLayoutParams(paramss);
-                imageViewMap.setVisibility(View.INVISIBLE);
-
-                TextView textViewIP = (TextView) layout.findViewById(R.id.textViewIP);
-                textViewIP.setText(writeText);
-            }
+            TextView textViewIP = (TextView) layout.findViewById(R.id.textViewIP);
+            textViewIP.setText(writeText);
+            //}
             Button cancelButton = (Button) layout.findViewById(R.id.okIP);
             cancelButton.setOnClickListener(cancel_button_click_listener);
 
@@ -396,47 +365,47 @@ public class MainActivity extends AppCompatActivity {
             }
     };
 
-    private void ListImages(Integer myLoc) {
-        switch (myLoc) {
-            case 1:
-                Intent intent1 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                String messageid1 ="1";
-                intent1.putExtra(EXTRA_MESSAGE, messageid1);
-                startActivity(intent1);
-                break;
-            case 2:
-                Intent intent2 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                String messageid2 ="2";
-                intent2.putExtra(EXTRA_MESSAGE, messageid2);
-                startActivity(intent2);
-                break;
-            case 3:
-                Intent intent3 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                String messageid3 ="3";
-                intent3.putExtra(EXTRA_MESSAGE, messageid3);
-                startActivity(intent3);
-                break;
-            case 4:
-                Intent intent4 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                String messageid4 ="4";
-                intent4.putExtra(EXTRA_MESSAGE, messageid4);
-                startActivity(intent4);
-                break;
-            case 5:
-                Intent intent5 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                String messageid5 ="5";
-                intent5.putExtra(EXTRA_MESSAGE, messageid5);
-                startActivity(intent5);
-                break;
-            case 6:
-                Intent intent6 = new Intent(getBaseContext(), ListImagesActivity99.class);
-                System.out.println("Hitting6");
-                String messageid6 ="6";
-                intent6.putExtra(EXTRA_MESSAGE, messageid6);
-                startActivity(intent6);
-                break;
-        }
-    }
+//    private void ListImages(Integer myLoc) {
+//        switch (myLoc) {
+//            case 1:
+//                Intent intent1 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                String messageid1 ="1";
+//                intent1.putExtra(EXTRA_MESSAGE, messageid1);
+//                startActivity(intent1);
+//                break;
+//            case 2:
+//                Intent intent2 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                String messageid2 ="2";
+//                intent2.putExtra(EXTRA_MESSAGE, messageid2);
+//                startActivity(intent2);
+//                break;
+//            case 3:
+//                Intent intent3 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                String messageid3 ="3";
+//                intent3.putExtra(EXTRA_MESSAGE, messageid3);
+//                startActivity(intent3);
+//                break;
+//            case 4:
+//                Intent intent4 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                String messageid4 ="4";
+//                intent4.putExtra(EXTRA_MESSAGE, messageid4);
+//                startActivity(intent4);
+//                break;
+//            case 5:
+//                Intent intent5 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                String messageid5 ="5";
+//                intent5.putExtra(EXTRA_MESSAGE, messageid5);
+//                startActivity(intent5);
+//                break;
+//            case 6:
+//                Intent intent6 = new Intent(getBaseContext(), ListImagesActivity99.class);
+//                System.out.println("Hitting6");
+//                String messageid6 ="6";
+//                intent6.putExtra(EXTRA_MESSAGE, messageid6);
+//                startActivity(intent6);
+//                break;
+//        }
+//    }
 
 
 
@@ -470,35 +439,42 @@ public class MainActivity extends AppCompatActivity {
 
                         final String imageName = ImageManager.UploadImage(imageStream, imageLength, dateStringFinal, myLoc,storageSig);
                         System.out.println("About to uploaded!!!"+myLoc);
-
+                        System.out.println("Returned is "+imageName);
+                        uploading.setVisibility(View.INVISIBLE);
 
                         switch (myLoc) {
                             case 1:
-                                Button currentButton1 = (Button) findViewById(R.id.upload1);
-                                currentButton1.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck1 = (ImageView) findViewById(R.id.check1);
+                                currentCheck1.setVisibility(View.VISIBLE);
+                                currentCheck1.setImageResource(R.drawable.success);
                                 break;
                             case 2:
-                                Button currentButton2 = (Button) findViewById(R.id.upload2);
-                                currentButton2.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck2 = (ImageView) findViewById(R.id.check2);
+                                currentCheck2.setVisibility(View.VISIBLE);
+                                currentCheck2.setImageResource(R.drawable.success);
                                 break;
                             case 3:
-                                Button currentButton3 = (Button) findViewById(R.id.upload3);
-                                currentButton3.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck3 = (ImageView) findViewById(R.id.check3);
+                                currentCheck3.setVisibility(View.VISIBLE);
+                                currentCheck3.setImageResource(R.drawable.success);
                                 break;
                             case 4:
-                                Button currentButton4 = (Button) findViewById(R.id.upload4);
-                                currentButton4.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck4 = (ImageView) findViewById(R.id.check4);
+                                currentCheck4.setVisibility(View.VISIBLE);
+                                currentCheck4.setImageResource(R.drawable.success);
                                 break;
                             case 5:
-                                Button currentButton5 = (Button) findViewById(R.id.upload5);
-                                currentButton5.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck5 = (ImageView) findViewById(R.id.check5);
+                                currentCheck5.setVisibility(View.VISIBLE);
+                                currentCheck5.setImageResource(R.drawable.success);
                                 break;
                             case 6:
-                                Button currentButton6 = (Button) findViewById(R.id.upload6);
-                                currentButton6.setBackgroundColor(Color.GREEN);
+                                ImageView currentCheck6 = (ImageView) findViewById(R.id.check6);
+                                currentCheck6.setVisibility(View.VISIBLE);
+                                currentCheck6.setImageResource(R.drawable.success);
                                 break;
                         }
-                        System.out.println("Done with switch");
+
 
 
 
@@ -513,35 +489,45 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch(Exception ex) {
                         final String exceptionMessage = ex.getMessage();
-                        uploadImageButton1.setEnabled(false);
+                        uploading.setVisibility(View.INVISIBLE);
+
+                        runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                switch (myLoc) {
+                                    case 1:
+                                        ImageView currentCheck1 = (ImageView) findViewById(R.id.check1);
+                                        currentCheck1.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 2:
+                                        ImageView currentCheck2 = (ImageView) findViewById(R.id.check2);
+                                        currentCheck2.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 3:
+                                        ImageView currentCheck3 = (ImageView) findViewById(R.id.check3);
+                                        currentCheck3.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 4:
+                                        ImageView currentCheck4 = (ImageView) findViewById(R.id.check4);
+                                        currentCheck4.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 5:
+                                        ImageView currentCheck5 = (ImageView) findViewById(R.id.check5);
+                                        currentCheck5.setVisibility(View.VISIBLE);
+                                        break;
+                                    case 6:
+                                        ImageView currentCheck6 = (ImageView) findViewById(R.id.check6);
+                                        currentCheck6.setVisibility(View.VISIBLE);
+                                        break;
+                                }
+                            }
+                        });
+
+
+
+
                         System.out.println("Catch statement triggered!!");
-                        switch (myLoc) {
-                            case 1:
-                                Button currentButton1 = (Button) findViewById(R.id.upload1);
-                                currentButton1.setEnabled(true);
-                                break;
-                            case 2:
-                                Button currentButton2 = (Button) findViewById(R.id.upload2);
-                                currentButton2.setEnabled(true);
-                                break;
-                            case 3:
-                                Button currentButton3 = (Button) findViewById(R.id.upload3);
-                                currentButton3.setEnabled(true);
-                                break;
-                            case 4:
-                                Button currentButton4 = (Button) findViewById(R.id.upload4);
-                                currentButton4.setEnabled(true);
-                                break;
-                            case 5:
-                                Button currentButton5 = (Button) findViewById(R.id.upload5);
-                                currentButton5.setEnabled(true);
-                                break;
-                            case 6:
-                                Button currentButton6 = (Button) findViewById(R.id.upload6);
-                                currentButton6.setEnabled(true);
-                                break;
-                        }
-                        handler.post(new Runnable() {
+                                                handler.post(new Runnable() {
                             public void run() {
                                 Toast.makeText(MainActivity.this, exceptionMessage, Toast.LENGTH_SHORT).show();
                             }

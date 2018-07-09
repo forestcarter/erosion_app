@@ -2,21 +2,14 @@ package com.donsaguaro.keetseelerosion;
 
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Path;
 import android.location.Criteria;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,37 +19,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.donsaguaro.keetseelerosion.R;
-
-import org.osmdroid.api.IGeoPoint;
 //import org.osmdroid.config.Configuration;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.views.overlay.Polyline;
 //import org.osmdroid.bonuspack.overlays.;
-import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.views.MapView;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.api.IMapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
-import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
-import java.io.File;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class act_GPS  extends Activity {
@@ -91,6 +71,7 @@ public class act_GPS  extends Activity {
         setContentView(R.layout.gps_view);
         System.out.println("Made it here");
 
+        myView= (View) findViewById(R.id.map);
         myView= (View) findViewById(R.id.map);
         myMapView = (MapView) findViewById(R.id.map);
 
@@ -174,9 +155,9 @@ public class act_GPS  extends Activity {
         GeoPoint p6 = new GeoPoint(36.751914, -110.496832);
         GeoPoint p7 = new GeoPoint(36.761, -110.497);
         //mapController.setCenter(new GeoPoint(myLoc2.getLatitude(), myLoc2.getLongitude()));
-        //mapController.setCenter(p7);
+        mapController.setCenter(p3);
         mLocationOverlay.enableMyLocation();
-        mLocationOverlay.enableFollowLocation();
+        //mLocationOverlay.enableFollowLocation();
 
 
 
@@ -282,7 +263,7 @@ public class act_GPS  extends Activity {
 //        });
 
         //myMapView.getOverlays().clear();
-        myMapView.getOverlayManager().add(polyline);
+        //myMapView.getOverlayManager().add(polyline);
         myMapView.getOverlays().add(mOverlay);
         myMapView.getOverlays().add(mLocationOverlay);
     }
@@ -312,7 +293,7 @@ public class act_GPS  extends Activity {
             LayoutInflater inflater = (LayoutInflater) act_GPS.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.popupip2,
+            View layout = inflater.inflate(R.layout.popupimages,
                     (ViewGroup) findViewById(R.id.popupIP2));
             // create a 300px width and 470px height PopupWindow
             pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
@@ -324,31 +305,31 @@ public class act_GPS  extends Activity {
 
             switch (myLocNum) {
                 case "Location 1":
-                    textViewGPS.setText( R.string.loc1Desc);
+                    textViewGPS.setText(R.string.loc1Desc);
                     imageGPS.setImageResource(R.drawable.loc1);
                     break;
                 case "Location 2":
-                    textViewGPS.setText( R.string.loc2Desc);
+                    textViewGPS.setText(R.string.loc2Desc);
                     imageGPS.setImageResource(R.drawable.loc2);
                     break;
                 case "Location 3":
-                    textViewGPS.setText( R.string.loc3Desc);
+                    textViewGPS.setText(R.string.loc3Desc);
                     imageGPS.setImageResource(R.drawable.loc3);
                     break;
                 case "Location 4":
-                    textViewGPS.setText( R.string.loc4Desc);
+                    textViewGPS.setText(R.string.loc4Desc);
                     imageGPS.setImageResource(R.drawable.loc4);
                     break;
                 case "Location 5":
-                    textViewGPS.setText( R.string.loc5Desc);
+                    textViewGPS.setText(R.string.loc5Desc);
                     imageGPS.setImageResource(R.drawable.loc5);
                     break;
                 case "Location 6":
-                    textViewGPS.setText( R.string.loc6Desc);
+                    textViewGPS.setText(R.string.loc6Desc);
                     imageGPS.setImageResource(R.drawable.loc6);
                     break;
                 case "Keet Seel":
-                    textViewGPS.setText( R.string.locksDesc);
+                    textViewGPS.setText(R.string.locksDesc);
                     imageGPS.setImageResource(R.drawable.star);
                     break;
             }

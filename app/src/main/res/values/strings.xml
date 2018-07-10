@@ -11,7 +11,7 @@
 
         1. Use the map to find each location. You can click the locations to see an example
         photo and a description. Try to match the example photo as best you can.\n\n
-        2. Use your phone's camera to take a landscape photo. 
+        2. Use your phone's camera to take a landscape photo.
         2. Enter the date the photos were taken to enable the select buttons. \n\n
         3. Use the Select buttons to select your photo. Once a photo is selected, the select
         button will turn green and the upload button will be enabled.\n\n
@@ -22,19 +22,24 @@
 
 
 
+    <string name="loc1Desc">
+This photo focuses on the west bank of the stream, facing upstream.
+        Use the hill in the top right to try to match the example photo above.
 
-
-
-
-
-
-
-    <string name="loc1Desc">Here is description 1 </string>
-    <string name="loc2Desc">Here is description 2 </string>
-    <string name="loc3Desc">Here is description 3 </string>
-    <string name="loc4Desc">Here is description 4 </string>
-    <string name="loc5Desc">Here is description 5 </string>
-    <string name="loc6Desc">Here is description 6 </string>
-    <string name="locksDesc">Here is description ks </string>
+    </string>
+    <string name="loc2Desc">This photo includes both banks of the stream, facing downstream.
+        Use the rock formations at the center and top of the example image to position your photo.</string>
+    <string name="loc3Desc">This location is just to the east of the big waterfall, where the trail goes away from
+        the stream. Shoot your photo up the trail, using the rock formations in the example image as a guide. </string>
+    <string name="loc4Desc">This photo is looking upstream to the west bank of the stream.
+        Use the rock tower formation in the upper right of the example image to guide you.</string>
+    <string name="loc5Desc">
+        This photo includes both banks of the stream looking downriver.
+        Try to match the amount of sky that is included in the example image.
+    </string>
+    <string name="loc6Desc">This photo is taken at the top of the waterfall area, between the two streams.
+        Looking downriver, use the large rock formation at the top of the example image as a guide. </string>
+    <string name="locksDesc">No photos are needed at Keet Seel </string>
     <string name="storageSignature">YvS15O5T%2BiS6dOFnt7b10GvOAtKLaTsNSV0WzMcD6YA%3D</string>
+
 </resources>

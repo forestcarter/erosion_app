@@ -14,20 +14,24 @@
         android:id="@+id/imageGPS"
         android:layout_width="384dp"
         android:layout_height="260dp"
-        app:srcCompat="@drawable/map1"
+        app:srcCompat="@drawable/loc1"
         tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/textViewGPS"
         android:layout_width="412dp"
         android:layout_height="74dp"
-        android:text="Sampe Text for now" />
+        android:text="Sampe Text for now"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewGPS2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please take photos in landscape (horizontal) view!" />
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="Please take photos in landscape (horizontal) view!"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/okIPGPS"

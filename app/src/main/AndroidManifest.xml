@@ -21,8 +21,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.donsaguaro.keetseelerosion.ListImagesActivity99"
-            android:parentActivityName="com.donsaguaro.keetseelerosion.MainActivity"/>
 
 
 

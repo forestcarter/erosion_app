@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/textViewGPS"
-        android:layout_width="412dp"
-        android:layout_height="74dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Sampe Text for now"
         android:textSize="18sp" />
 

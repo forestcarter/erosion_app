@@ -3,19 +3,19 @@
     <string name="privacyText">This is privacy info</string>
 
     <string name="instructionsText">
-        Welcome to the Keet Seel Erosion App!
+        Welcome to the Keet Seel Erosion App!\n
         The purpose of the app is to help Citizen Scientists like you contribute
         to a photo time-series of erosion-sensitive sites in Keet Seel canyon.
-        On your hike, will take photos in six locations.  You will upload the photos our database
+        On your hike, will take photos in six locations.  You will upload the photos to our database
         when you return and are connected to wi-fi or cell service. \n\n
 
         1. Use the map to find each location. You can click the locations to see an example
         photo and a description. Try to match the example photo as best you can.\n\n
-        2. Use your phone's camera to take a landscape photo.
-        2. Enter the date the photos were taken to enable the select buttons. \n\n
-        3. Use the Select buttons to select your photo. Once a photo is selected, the select
+        2. Use your phone\'s camera to take a landscape photo.\n\n
+        3. Enter the date the photos were taken to enable the select buttons. \n\n
+        4. Use the Select buttons to select your photo. Once a photo is selected, the select
         button will turn green and the upload button will be enabled.\n\n
-        4. Use the upload button when you are connected to the internet. A checkmark will appear
+        5. Use the upload buttons when you are connected to the internet. A checkmark will appear
         if the upload was successful.
 
         </string>
